@@ -8,6 +8,7 @@ export class TodoItem extends Component {
       borderBottom: '1px #ccc dotted',
       borderLeft: '1px #ccc dotted',
       borderRight: '1px #ccc dotted',
+      backgroundColor: '#fff',
       textDecoration: this.props.todo.completed ? 'line-through' : 'none',
     };
   };
