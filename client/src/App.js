@@ -13,15 +13,13 @@ class App extends Component {
   };
 
   componentDidMount() {
-    axios
-      .get('https://jsonplaceholder.typicode.com/todos?_limit=10')
-      .then((res) => this.setState({ todos: res.data }));
+    axios.get('/api/todos').then((res) => this.setState({ todos: res.data }));
   }
 
   toggleComplete = (id) => {
     this.setState({
       todos: this.state.todos.map((todo) => {
-        if (todo.id === id) {
+        if (todo._id === id) {
           todo.completed = !todo.completed;
         }
         return todo;
@@ -31,21 +29,23 @@ class App extends Component {
 
   addTodo = (title) => {
     axios
-      .post('https://jsonplaceholder.typicode.com/todos', {
+      .post('/api/todos', {
         title: title,
         completed: false,
       })
-      .then((res) => this.setState({ todos: [...this.state.todos, res.data] }));
+      .then(
+        (res) =>
+          console.log('TODO Added:', res.data.title) +
+          this.setState({ todos: [...this.state.todos, res.data] })
+      );
   };
 
   deleteTodo = (id) => {
-    axios
-      .delete(`https://jsonplaceholder.typicode.com/todos/${id}`)
-      .then((res) =>
-        this.setState({
-          todos: [...this.state.todos.filter((todo) => todo.id !== id)],
-        })
-      );
+    axios.delete(`/api/todos/${id}`).then((res) =>
+      this.setState({
+        todos: [...this.state.todos.filter((todo) => todo._id !== id)],
+      })
+    );
   };
 
   render() {
@@ -61,6 +61,7 @@ class App extends Component {
                 <div className='container'>
                   <AddTodo addTodo={this.addTodo} />
                   <Todos
+                    key={this.state.todos._id}
                     todos={this.state.todos}
                     toggleComplete={this.toggleComplete}
                     deleteTodo={this.deleteTodo}

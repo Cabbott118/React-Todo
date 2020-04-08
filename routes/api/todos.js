@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   const newTodo = new Todo({
     title: req.body.title,
+    completed: req.body.completed,
     date: req.body.date,
   });
   newTodo.save().then((todo) => res.json(todo));
