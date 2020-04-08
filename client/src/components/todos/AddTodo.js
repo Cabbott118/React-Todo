@@ -20,7 +20,10 @@ export class AddTodo extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit} style={{ display: 'flex' }}>
+      <form
+        onSubmit={this.onSubmit}
+        style={{ display: 'flex', height: '45px' }}
+      >
         <input
           type='text'
           name='title'
