@@ -6,7 +6,7 @@ import Todos from './components/Todos';
 import About from './components/pages/About';
 import axios from 'axios';
 import './App.css';
-//Adding comment to change files
+
 class App extends Component {
   state = {
     todos: [],
