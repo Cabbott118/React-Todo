@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './components/layout/Header';
-import AddTodo from './components/AddTodo';
-import Todos from './components/Todos';
+import AddTodo from './components/todos/AddTodo';
+import Todos from './components/todos/Todos';
 import About from './components/pages/About';
 import axios from 'axios';
 import './App.css';
