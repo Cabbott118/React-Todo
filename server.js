@@ -1,10 +1,23 @@
 const express = require('express');
 const app = express();
-// const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const path = require('path');
+const dotenv = require('dotenv').config();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const db = process.env.MONGODB;
+mongoose
+  .connect(db, {
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+  })
+  .then(() => console.log('MongoDB Connected...'))
+  .catch((err) => console.log(err));
+
+app.use('/api/todos', require('./routes/api/todos'));
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
