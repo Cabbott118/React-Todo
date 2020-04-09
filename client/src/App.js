@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Header from './components/layout/Header';
+import SearchTodos from './components/todos/SearchTodos';
 import AddTodo from './components/todos/AddTodo';
 import Todos from './components/todos/Todos';
 import About from './components/pages/About';
@@ -10,6 +11,7 @@ import './App.css';
 class App extends Component {
   state = {
     todos: [],
+    searchedTodos: [],
   };
 
   componentDidMount() {
@@ -48,7 +50,18 @@ class App extends Component {
     );
   };
 
+  searchTodo = (searchParam) => {
+    axios.get('/api/todos').then((res) =>
+      this.setState({
+        searchedTodos: [
+          ...this.state.todos.filter((todo) => todo.title === searchParam),
+        ],
+      })
+    );
+  };
+
   render() {
+    console.log(this.state.searchedTodos);
     return (
       <Router>
         <div className='App'>
@@ -59,6 +72,7 @@ class App extends Component {
             render={(props) => (
               <React.Fragment>
                 <div className='container'>
+                  <SearchTodos searchTodos={this.searchTodo} />
                   <AddTodo addTodo={this.addTodo} />
                   <Todos
                     key={this.state.todos._id}
