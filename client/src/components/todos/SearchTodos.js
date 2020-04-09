@@ -14,7 +14,8 @@ export class SearchTodos extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.searchTodos(this.state.title);
+    const todoLowercase = this.state.title.toLowerCase();
+    this.props.searchTodos(todoLowercase);
     this.setState({ title: '' });
   };
 

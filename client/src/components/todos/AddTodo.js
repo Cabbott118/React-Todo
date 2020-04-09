@@ -14,7 +14,8 @@ export class AddTodo extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    this.props.addTodo(this.state.title);
+    const todoLowercase = this.state.title.toLowerCase();
+    this.props.addTodo(todoLowercase);
     this.setState({ title: '' });
   };
 

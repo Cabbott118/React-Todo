@@ -24,7 +24,7 @@ export class TodoItem extends Component {
             type='checkbox'
             onChange={this.props.toggleComplete.bind(this, _id)}
           />{' '}
-          {title}
+          <span style={{ textTransform: 'capitalize' }}>{title}</span>
           <button
             onClick={this.props.deleteTodo.bind(this, _id)}
             style={btnStyle}

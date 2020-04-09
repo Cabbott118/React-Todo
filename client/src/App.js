@@ -35,17 +35,16 @@ class App extends Component {
         title: title,
         completed: false,
       })
-      .then(
-        (res) =>
-          console.log('TODO Added:', res.data.title) +
-          this.setState({ todos: [...this.state.todos, res.data] })
-      );
+      .then((res) => this.setState({ todos: [...this.state.todos, res.data] }));
   };
 
   deleteTodo = (id) => {
     axios.delete(`/api/todos/${id}`).then((res) =>
       this.setState({
         todos: [...this.state.todos.filter((todo) => todo._id !== id)],
+        searchedTodos: [
+          ...this.state.searchedTodos.filter((todo) => todo._id !== id),
+        ],
       })
     );
   };
@@ -58,10 +57,13 @@ class App extends Component {
         ],
       })
     );
+
+    if (this.state.searchedTodos.length === 0) {
+      console.log('empty');
+    }
   };
 
   render() {
-    console.log(this.state.searchedTodos);
     return (
       <Router>
         <div className='App'>
@@ -72,14 +74,24 @@ class App extends Component {
             render={(props) => (
               <React.Fragment>
                 <div className='container'>
-                  <SearchTodos searchTodos={this.searchTodo} />
-                  <AddTodo addTodo={this.addTodo} />
-                  <Todos
-                    key={this.state.todos._id}
-                    todos={this.state.todos}
-                    toggleComplete={this.toggleComplete}
-                    deleteTodo={this.deleteTodo}
-                  />
+                  <div className='todoBlock'>
+                    <SearchTodos searchTodos={this.searchTodo} />
+                    <Todos
+                      key={this.state.searchedTodos._id}
+                      todos={this.state.searchedTodos}
+                      toggleComplete={this.toggleComplete}
+                      deleteTodo={this.deleteTodo}
+                    />
+                  </div>
+                  <div className='todoBlock'>
+                    <AddTodo addTodo={this.addTodo} />
+                    <Todos
+                      key={this.state.todos._id}
+                      todos={this.state.todos}
+                      toggleComplete={this.toggleComplete}
+                      deleteTodo={this.deleteTodo}
+                    />
+                  </div>
                 </div>
               </React.Fragment>
             )}
